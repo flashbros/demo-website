@@ -1,4 +1,4 @@
-export async function GET() {
+export async function POST() {
   const execSync = require("child_process").execSync;
   // import { execSync } from 'child_process';  // replace ^ if using ES modules
 
@@ -11,11 +11,10 @@ export async function GET() {
   return Response.json(JSON.stringify(filtered));
 }
 
+export async function GET() {
+  const execSync = require("child_process").execSync;
 
-export async function POST() {
-    const execSync = require("child_process").execSync;
-
-  const output = execSync("docker container restart smart-backend", { encoding: "utf-8" });
+  execSync("docker container restart smart-backend", { encoding: "utf-8" });
 
   return Response.json("d1");
-  }
+}
