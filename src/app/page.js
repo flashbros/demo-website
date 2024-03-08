@@ -1,4 +1,5 @@
 "use client";
+import { useRouter } from "next/navigation";
 import styles from "./styles.module.css";
 import LeftPanel from "./[components]/[leftPanel]/leftPanel";
 import RightPanel from "./[components]/[rightPanel]/rightPanel";
@@ -11,6 +12,7 @@ import CryptoMarket from "../../ABIs/CryptoMarket.json";
 import { ethers } from "ethers";
 
 export default function HomePage() {
+  const router = useRouter();
   const [contract, setContract] = useState(null); // The contract object
   const [balance, setBalance] = useState(0.0);
 
@@ -190,6 +192,21 @@ export default function HomePage() {
     getBalance();
   }, [state1, state2]);
 
+  const delay = (ms) => new Promise((res) => setTimeout(res, ms));
+
+  const restartBackend = async () => {
+    try {
+      console.log("Restarting backend");
+      const response = await fetch("/api", {
+        method: "GET",
+      });
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div>
       <Header balance={balance} />
@@ -203,6 +220,9 @@ export default function HomePage() {
         setState2={setState2}
         balance={balance}
       />
+      <div className={styles.restart} onClick={() => restartBackend()}>
+        Restart
+      </div>
     </div>
   );
 }
