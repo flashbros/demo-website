@@ -19,9 +19,6 @@ RUN \
   fi
 
 # Production image, copy all the files and run next
-WORKDIR /app/demo-website
-ENV NODE_ENV production
 EXPOSE 3000
-ENV PORT 3000
 ENV HOSTNAME "0.0.0.0"
 CMD ["npm", "run", "start"]
