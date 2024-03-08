@@ -1,5 +1,7 @@
 FROM node:18-alpine
 
+RUN apk update && apk add --no-cache docker-cli
+
 # Install Dependencies
 WORKDIR /app
 COPY package.json package-lock.json*  ./
