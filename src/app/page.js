@@ -200,8 +200,11 @@ export default function HomePage() {
       const response = await fetch("/api", {
         method: "GET",
       });
+
       const data = await response.json();
       console.log(data);
+      await delay(2000);
+      location.reload();
     } catch (error) {
       console.log(error);
     }

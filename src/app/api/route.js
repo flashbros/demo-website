@@ -11,10 +11,12 @@ export async function POST() {
   return Response.json(JSON.stringify(filtered));
 }
 
+
+
 export async function GET() {
-  const execSync = require("child_process").execSync;
+  const exec = require("child_process").execSync;
 
-  execSync("docker container restart smart-backend", { encoding: "utf-8" });
-
+  exec("docker container restart smart-backend", { encoding: "utf-8" });
+  
   return Response.json("d1");
 }
