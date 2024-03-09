@@ -18,7 +18,7 @@
 }
 
 .dividerY {
-  z-index: 9999;
+  z-index: 999;
   position: absolute;
   height: 50%;
   width: 3px;
@@ -31,7 +31,7 @@
 }
 
 .dividerX {
-  z-index: 9999;
+  z-index: 999;
   position: absolute;
   width: 100%;
   height: 3px;

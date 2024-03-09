@@ -12,7 +12,7 @@ import { ethers } from "ethers";
 import Loader from "./[components]/[loader]/loader";
 
 export default function HomePage() {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [contract, setContract] = useState(null); // The contract object
   const [balance, setBalance] = useState(0.0);
   const [state1, setState1] = useState(0);
@@ -195,13 +195,11 @@ export default function HomePage() {
 
   const restartBackend = async () => {
     try {
-      console.log("Restarting backend");
       setLoading(true);
       const response = await fetch("/api", {
         method: "GET",
       });
       const data = await response.json();
-      console.log(data);
       await delay(2000);
       location.reload();
     } catch (error) {
