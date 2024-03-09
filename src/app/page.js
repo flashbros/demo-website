@@ -9,11 +9,12 @@ import ChannelLogic from "../../ABIs/ChannelLogic.json";
 import ExampleBorrower from "../../ABIs/ExampleBorrower.json";
 import CryptoMarket from "../../ABIs/CryptoMarket.json";
 import { ethers } from "ethers";
+import Loader from "./[components]/[loader]/loader";
 
 export default function HomePage() {
+  const [loading, setLoading] = useState(false);
   const [contract, setContract] = useState(null); // The contract object
   const [balance, setBalance] = useState(0.0);
-
   const [state1, setState1] = useState(0);
   const [state2, setState2] = useState(0);
 
@@ -190,8 +191,25 @@ export default function HomePage() {
     getBalance();
   }, [state1, state2]);
 
+  const delay = (ms) => new Promise((res) => setTimeout(res, ms));
+
+  const restartBackend = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch("/api", {
+        method: "GET",
+      });
+      const data = await response.json();
+      await delay(2000);
+      location.reload();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div>
+      {loading && <Loader />}
       <Header balance={balance} />
       <LeftPanel contract={contract} getBalance={getBalance} />
       <div className={styles.dividerY} />
@@ -203,6 +221,9 @@ export default function HomePage() {
         setState2={setState2}
         balance={balance}
       />
+      <div className={styles.restart} onClick={() => restartBackend()}>
+        Restart
+      </div>
     </div>
   );
 }
