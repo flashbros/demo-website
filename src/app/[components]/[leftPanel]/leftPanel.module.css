@@ -1,20 +1,28 @@
-.pp {
+.rw {
   height: 100%;
   width: 100%;
   position: relative;
 }
 
+.position {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
 .container {
   position: relative;
-  width: 75%;
+  width: 100%;
   background-color: #f5f5f5;
   border-radius: 10px;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
   padding: 6px;
-  top: 40%;
-  left: 50%;
-  transform: translateX(-50%);
+  z-index: 2;
 }
 
 .actionField {
@@ -47,23 +55,20 @@
 }
 
 .log {
-  position: relative;
-  width: 50%;
+  position: absolute;
+  width: 75%;
   min-height: fit-content;
   background-color: #f5f5f5;
   border-radius: 0 0 10px 10px;
   padding: 6px;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
-  z-index: -10;
-  top: 40%;
-  left: 50%;
-  transform: translateX(-50%);
+  z-index: 1;
+  left: 12.5%;
 }
 
-.logTitle {
+.title {
   position: relative;
   text-decoration: underline 2px;
-  margin: 4px 0 4px 0;
 }
 
 .logContent {
@@ -74,4 +79,29 @@
 
 .item {
   opacity: 0;
+}
+
+.cm {
+  padding: 6px;
+  position: relative;
+  width: 20%;
+  height: fit-content;
+  background-color: #f5f5f5;
+  border-radius: 10px;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+}
+
+.cmContent {
+  position: relative;
+  width: 100%;
+  height: 10%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.fitter {
+  width: 50%;
+  position: relative;
 }
