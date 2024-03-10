@@ -4,6 +4,7 @@ import style from "./rightPanel.module.css";
 import { useEffect, useState } from "react";
 import { ethers } from "ethers";
 import { animate } from "framer-motion";
+import ChannelStatus from "./channelStatus";
 
 export default function RightPanel({
   contract,
@@ -37,7 +38,7 @@ export default function RightPanel({
     async function dodo() {
       if (state1 >= 2 && state2 >= 2 && !d1) {
         setD1(true);
-        let chSta = document.getElementsByClassName(style.channelStatus)[0];
+        let chSta = document.getElementsByClassName(style.channelContainer)[0];
         let conDots = document.getElementsByClassName(style.connectionDots)[0];
         animate(conDots, { opacity: 1 }, { duration: 1 });
         animate(chSta, { opacity: 1 }, { duration: 0.5 });
@@ -55,7 +56,7 @@ export default function RightPanel({
           animate(conDots, { opacity: 0 }, { duration: 0.5 });
         }
         if (state1 == 8 && state2 == 8) {
-          let chSta = document.getElementsByClassName(style.channelStatus)[0];
+          let chSta = document.getElementsByClassName(style.channelContainer)[0];
           animate(chSta, { opacity: 0 }, { duration: 0.5 });
         }
       }
@@ -98,11 +99,7 @@ export default function RightPanel({
             setOtherState={setState2}
             channelBalance={channelBalance}
           />
-          <div className={style.channelStatus}>
-            <div className={style.channelTitle}>Channel</div>
-            <div>ID: {channel.id}</div>
-            <div>Balance: {channelBalance} ETH</div>
-          </div>
+          <ChannelStatus channel={channel} channelBalance={channelBalance} />
           <UserPanel
             user={user2}
             users={users}

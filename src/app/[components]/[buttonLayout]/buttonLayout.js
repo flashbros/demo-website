@@ -44,6 +44,12 @@ export default function ButtonLayout({
         Fund
       </div>
       <div
+        className={`${style.button} ${inactive[1] ? style.inactive : ""}`}
+        onClick={() => (!inactive[1] ? setState(3) : "")}
+      >
+        Update
+      </div>
+      <div
         className={`${style.button} ${inactive[2] ? style.inactive : ""}`}
         onClick={() => {
           if (!inactive[2]) {
