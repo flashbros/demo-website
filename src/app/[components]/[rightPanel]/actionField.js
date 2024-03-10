@@ -12,6 +12,7 @@ export default function ActionField({
   contract,
   walletBalance,
   channelBalance,
+  setState,
   offChain,
   setOffChain,
 }) {
@@ -85,6 +86,7 @@ export default function ActionField({
             : channelBalance - parseFloat(updateAmount),
         finalized: false,
       }));
+      setState(4);
     } catch (error) {
       onError();
       console.log(error);
@@ -103,22 +105,10 @@ export default function ActionField({
     try {
       const Channel_State = {
         channel_id: 1,
-        balance_A:
-          user.id == 0
-            ? ethers.utils.parseEther(closeAmount)
-            : ethers.utils.parseEther(
-                (channelBalance - parseFloat(closeAmount)).toFixed(8)
-              ),
-
-        balance_B:
-          user.id == 1
-            ? ethers.utils.parseEther(closeAmount)
-            : ethers.utils.parseEther(
-                (channelBalance - parseFloat(closeAmount)).toFixed(8)
-              ),
-
-        version_num: 1,
-        finalized: true,
+        balance_A: ethers.utils.parseEther(offChain.balance_A),
+        balance_B: ethers.utils.parseEther(offChain.balance_B),
+        version_num: offChain.version_num,
+        finalized: offChain.finalized,
       };
       contract[user.id + 1].close(Channel_State);
     } catch (error) {
@@ -198,19 +188,23 @@ export default function ActionField({
     case 6:
       return <>Press a function!</>;
     case 7:
-      <>
-        <button className={strucStyle.button} onClick={() => closeChan()}>
-          Close
-        </button>
-      </>;
+      return (
+        <>
+          <button className={strucStyle.button} onClick={() => closeChan()}>
+            Close
+          </button>
+        </>
+      );
     case 8:
       return <>Press a function!</>;
     case 9:
-      <>
-        <button className={strucStyle.button} onClick={() => withdrawChan()}>
-          Withdraw
-        </button>
-      </>;
+      return (
+        <>
+          <button className={strucStyle.button} onClick={() => withdrawChan()}>
+            Withdraw
+          </button>
+        </>
+      );
     case 10:
       return <>Transaction done!</>;
     default:

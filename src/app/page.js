@@ -120,14 +120,14 @@ export default function HomePage() {
 
             if (dd.closed) {
               if (dd.withdrawed_a && !dd.withdrawed_b) {
-                setState1(8);
-                setState2(6);
+                setState1(10);
+                setState2(8);
               } else if (dd.withdrawed_b && !dd.withdrawed_a) {
-                setState1(6);
-                setState2(8);
-              } else if (dd.withdrawed_a && dd.withdrawed_b) {
                 setState1(8);
-                setState2(8);
+                setState2(10);
+              } else if (dd.withdrawed_a && dd.withdrawed_b) {
+                setState1(10);
+                setState2(10);
               }
             }
           });
@@ -145,17 +145,17 @@ export default function HomePage() {
       conti.on("ChannelClose", (e) => {
         console.log("ChannelClose - Event");
         if (e) {
-          setState1(8);
+          setState1(10);
         } else {
-          setState2(8);
+          setState2(10);
         }
       });
       conti.on("ChannelWithdraw", (e) => {
         console.log("ChannelClose - Event");
         if (e) {
-          setState1(8);
+          setState1(10);
         } else {
-          setState2(8);
+          setState2(10);
         }
       });
     }

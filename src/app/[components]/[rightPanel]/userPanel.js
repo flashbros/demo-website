@@ -59,6 +59,7 @@ export default function UserPanel({
           contract={contract}
           walletBalance={walletBalance}
           channelBalance={channelBalance}
+          setState={setState}
           offChain={offChain}
           setOffChain={setOffChain}
         />

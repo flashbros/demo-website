@@ -48,20 +48,20 @@ export default function RightPanel({
         let conDots = document.getElementsByClassName(style.connectionDots)[0];
         animate(conDots, { opacity: 1 }, { duration: 1 });
         animate(chSta, { opacity: 1 }, { duration: 0.5 });
-      } else if (state1 == 8 || state2 == 8) {
-        if (state1 == 8) {
+      } else if (state1 == 10 || state2 == 10) {
+        if (state1 == 10) {
           let conDots = document.getElementsByClassName(
             style.connectionDotsTop
           )[0];
           animate(conDots, { opacity: 0 }, { duration: 0.5 });
         }
-        if (state2 == 8) {
+        if (state2 == 10) {
           let conDots = document.getElementsByClassName(
             style.connectionDotsBottom
           )[0];
           animate(conDots, { opacity: 0 }, { duration: 0.5 });
         }
-        if (state1 == 8 && state2 == 8) {
+        if (state1 == 10 && state2 == 10) {
           let chSta = document.getElementsByClassName(
             style.channelContainer
           )[0];
@@ -103,7 +103,7 @@ export default function RightPanel({
       }
     }
     dodo();
-  }, [contract]);
+  }, [contract, balance]);
 
   useEffect(() => {
     console.log("Channel Balance: " + channelBalance);
