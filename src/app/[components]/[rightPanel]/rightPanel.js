@@ -4,6 +4,7 @@ import style from "./rightPanel.module.css";
 import { useEffect, useState } from "react";
 import { ethers } from "ethers";
 import { animate } from "framer-motion";
+import ChannelStatus from "./channelStatus";
 
 export default function RightPanel({
   contract,
@@ -15,10 +16,16 @@ export default function RightPanel({
 }) {
   let user1 = { name: "Alice", id: 0 };
   let user2 = { name: "Bob", id: 1 };
-  let channel = { id: "1" };
 
   const [d1, setD1] = useState(false);
   const [channelBalance, setChannelBalance] = useState(0);
+  // Version Number, Balance A, Balance B
+  const [offChain, setOffChain] = useState({
+    version_num: 0,
+    balance_A: 0,
+    balance_B: 0,
+    finalized: false,
+  });
 
   let users = [
     {
@@ -37,25 +44,27 @@ export default function RightPanel({
     async function dodo() {
       if (state1 >= 2 && state2 >= 2 && !d1) {
         setD1(true);
-        let chSta = document.getElementsByClassName(style.channelStatus)[0];
+        let chSta = document.getElementsByClassName(style.channelContainer)[0];
         let conDots = document.getElementsByClassName(style.connectionDots)[0];
         animate(conDots, { opacity: 1 }, { duration: 1 });
         animate(chSta, { opacity: 1 }, { duration: 0.5 });
-      } else if (state1 == 8 || state2 == 8) {
-        if (state1 == 8) {
+      } else if (state1 == 10 || state2 == 10) {
+        if (state1 == 10) {
           let conDots = document.getElementsByClassName(
             style.connectionDotsTop
           )[0];
           animate(conDots, { opacity: 0 }, { duration: 0.5 });
         }
-        if (state2 == 8) {
+        if (state2 == 10) {
           let conDots = document.getElementsByClassName(
             style.connectionDotsBottom
           )[0];
           animate(conDots, { opacity: 0 }, { duration: 0.5 });
         }
-        if (state1 == 8 && state2 == 8) {
-          let chSta = document.getElementsByClassName(style.channelStatus)[0];
+        if (state1 == 10 && state2 == 10) {
+          let chSta = document.getElementsByClassName(
+            style.channelContainer
+          )[0];
           animate(chSta, { opacity: 0 }, { duration: 0.5 });
         }
       }
@@ -71,6 +80,54 @@ export default function RightPanel({
             (await contract[0].channels(1))[2].sum_of_balances.toString()
           )
         );
+      }
+    }
+    dodo();
+  }, [contract, balance]);
+
+  useEffect(() => {
+    async function dodo() {
+      if (contract) {
+        let version_num = (await contract[0].channels(1)).state.version_num;
+        let balance_A = ethers.utils.formatEther(
+          (await contract[0].channels(1))[0][1].toString()
+        );
+        let balance_B = ethers.utils.formatEther(
+          (await contract[0].channels(1))[0][2].toString()
+        );
+        setOffChain({
+          version_num: version_num.toNumber(),
+          balance_A: balance_A,
+          balance_B: balance_B,
+        });
+      }
+    }
+    dodo();
+  }, [contract]);
+
+  useEffect(() => {
+    async function dodo() {
+      if (contract) {
+        const dd = (await contract[0].channels(1))[2];
+        let balance_A = 0;
+        if (dd.funded_a) {
+          balance_A = ethers.utils.formatEther(
+            (await contract[0].channels(1))[0][1].toString()
+          );
+        }
+        let balance_B = 0;
+        if (dd.funded_b) {
+          balance_B = ethers.utils.formatEther(
+            (await contract[0].channels(1))[0][2].toString()
+          );
+        }
+
+        setOffChain((current) => ({
+          version_num: current.version_num,
+          balance_A: balance_A,
+          balance_B: balance_B,
+          finalized: current.finalized,
+        }));
       }
     }
     dodo();
@@ -97,12 +154,16 @@ export default function RightPanel({
             setState={setState1}
             setOtherState={setState2}
             channelBalance={channelBalance}
+            offChain={offChain}
+            setOffChain={setOffChain}
           />
-          <div className={style.channelStatus}>
-            <div className={style.channelTitle}>Channel</div>
-            <div>ID: {channel.id}</div>
-            <div>Balance: {channelBalance} ETH</div>
-          </div>
+          <ChannelStatus
+            contract={contract}
+            channelBalance={channelBalance}
+            state1={state1}
+            state2={state2}
+            offChain={offChain}
+          />
           <UserPanel
             user={user2}
             users={users}
@@ -112,6 +173,8 @@ export default function RightPanel({
             setState={setState2}
             setOtherState={setState1}
             channelBalance={channelBalance}
+            offChain={offChain}
+            setOffChain={setOffChain}
           />
         </div>
       </div>

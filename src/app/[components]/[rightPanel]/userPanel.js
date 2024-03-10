@@ -14,6 +14,8 @@ export default function UserPanel({
   setState,
   setOtherState,
   channelBalance,
+  offChain,
+  setOffChain,
 }) {
   const [walletBalance, setWalletBalance] = useState(0.0);
   const [userBalance, setUserBalance] = useState(0.0);
@@ -40,7 +42,9 @@ export default function UserPanel({
     <div className={style.userContainer}>
       <div className={style.topWrapper}>
         <div className={style.left}>
-          <div>{user.name}</div>
+          <div>
+            {user.name} {ownState}
+          </div>
           <div>Wallet: {walletBalance} ETH</div>
         </div>
         <div className={style.right}>
@@ -55,6 +59,9 @@ export default function UserPanel({
           contract={contract}
           walletBalance={walletBalance}
           channelBalance={channelBalance}
+          setState={setState}
+          offChain={offChain}
+          setOffChain={setOffChain}
         />
       </div>
       <ButtonLayout
@@ -63,6 +70,7 @@ export default function UserPanel({
         setState={setState}
         otherState={otherState}
         setOtherState={setOtherState}
+        setOffChain={setOffChain}
       />
     </div>
   );
