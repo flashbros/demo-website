@@ -105,14 +105,13 @@ export default function ActionField({
     try {
       const Channel_State = {
         channel_id: 1,
-        balance_A: ethers.utils.parseEther(offChain.balance_A),
-        balance_B: ethers.utils.parseEther(offChain.balance_B),
+        balance_A: ethers.utils.parseEther(offChain.balance_A.toString()),
+        balance_B: ethers.utils.parseEther(offChain.balance_B.toString()),
         version_num: offChain.version_num,
         finalized: offChain.finalized,
       };
       contract[user.id + 1].close(Channel_State);
     } catch (error) {
-      onError();
       console.log(error);
     }
   };

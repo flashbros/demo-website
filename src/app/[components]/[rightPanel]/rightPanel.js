@@ -103,6 +103,34 @@ export default function RightPanel({
       }
     }
     dodo();
+  }, [contract]);
+
+  useEffect(() => {
+    async function dodo() {
+      if (contract) {
+        const dd = (await contract[0].channels(1))[2];
+        let balance_A = 0;
+        if (dd.funded_a) {
+          balance_A = ethers.utils.formatEther(
+            (await contract[0].channels(1))[0][1].toString()
+          );
+        }
+        let balance_B = 0;
+        if (dd.funded_b) {
+          balance_B = ethers.utils.formatEther(
+            (await contract[0].channels(1))[0][2].toString()
+          );
+        }
+
+        setOffChain((current) => ({
+          version_num: current.version_num,
+          balance_A: balance_A,
+          balance_B: balance_B,
+          finalized: current.finalized,
+        }));
+      }
+    }
+    dodo();
   }, [contract, balance]);
 
   useEffect(() => {
@@ -132,6 +160,8 @@ export default function RightPanel({
           <ChannelStatus
             contract={contract}
             channelBalance={channelBalance}
+            state1={state1}
+            state2={state2}
             offChain={offChain}
           />
           <UserPanel
