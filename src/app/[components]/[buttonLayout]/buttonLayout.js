@@ -48,6 +48,7 @@ export default function ButtonLayout({
       </div>
       <div
         className={`${style.button} ${inactive[2] ? style.inactive : ""}`}
+        onClick={() => (!inactive[2] ? setState(5) : "")}
       >
         Update
       </div>

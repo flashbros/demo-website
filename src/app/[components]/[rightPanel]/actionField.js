@@ -13,7 +13,7 @@ export default function ActionField({
   walletBalance,
   channelBalance,
   offChain,
-  setOffChain
+  setOffChain,
 }) {
   const filterdUsers = users.filter((u) => u.id !== user.id);
 
@@ -73,14 +73,21 @@ export default function ActionField({
         setError("Wrong Input! Only numbers greater 0!");
         throw new Error("Wrong Input! Only numbers greater 0!");
       }
-      setOffChain(current => {
-        version_num: current.version_num + 1,
-       
-
-       
-      })
-
-
+      setOffChain((current) => ({
+        version_num: (current.version_num + 1),
+        balance_A:
+          user.id == 0
+            ? ethers.utils.parseEther(updateAmount)
+            : ethers.utils.parseEther(
+                (channelBalance - parseFloat(updateAmount)).toFixed(8)
+              ),
+        balance_B:
+          user.id == 1
+            ? ethers.utils.parseEther(updateAmount)
+            : ethers.utils.parseEther(
+                (channelBalance - parseFloat(updateAmount)).toFixed(8)
+              ),
+      }));
     } catch (error) {
       console.log(error);
     }
@@ -95,7 +102,7 @@ export default function ActionField({
   };
 
   const closeChan = async () => {
-    try {     
+    try {
       const Channel_State = {
         channel_id: 1,
         balance_A:
@@ -170,23 +177,26 @@ export default function ActionField({
       );
     case 4:
       return <>Press a function!</>;
-    case 5: 
-    return (
-      <>
-        <div id={"errorMsg" + user.id} className={style.error}>
-          {error}
-        </div>
-        <input
-          placeholder="Amount"
-          className={strucStyle.input}
-          type="number"
-          onChange={(e) => setUpdateAmount(e.target.value)}
-        />
-        <button className={strucStyle.button} onClick={() => updateOffChain()}>
-          Update
-        </button>
-      </>
-    );
+    case 5:
+      return (
+        <>
+          <div id={"errorMsg" + user.id} className={style.error}>
+            {error}
+          </div>
+          <input
+            placeholder="Amount"
+            className={strucStyle.input}
+            type="number"
+            onChange={(e) => setUpdateAmount(e.target.value)}
+          />
+          <button
+            className={strucStyle.button}
+            onClick={() => updateOffChain()}
+          >
+            Update
+          </button>
+        </>
+      );
     case 6:
       return <>Press a function!</>;
     case 7:
@@ -200,7 +210,7 @@ export default function ActionField({
         </>
       );
     case 9:
-      
+
     case 10:
       return <>Transaction done!</>;
     default:
