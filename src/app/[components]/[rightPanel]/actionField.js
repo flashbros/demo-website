@@ -12,7 +12,8 @@ export default function ActionField({
   contract,
   walletBalance,
   channelBalance,
-  setOffChain,
+  offChain,
+  setOffChain
 }) {
   const filterdUsers = users.filter((u) => u.id !== user.id);
 

@@ -14,6 +14,7 @@ export default function UserPanel({
   setState,
   setOtherState,
   channelBalance,
+  offChain,
   setOffChain
 }) {
   const [walletBalance, setWalletBalance] = useState(0.0);
@@ -56,6 +57,7 @@ export default function UserPanel({
           contract={contract}
           walletBalance={walletBalance}
           channelBalance={channelBalance}
+          offChain={offChain}
           setOffChain={setOffChain}
         />
       </div>

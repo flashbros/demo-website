@@ -125,6 +125,7 @@ export default function RightPanel({
             setState={setState1}
             setOtherState={setState2}
             channelBalance={channelBalance}
+            offChain={offChain}
             setOffChain={setOffChain}
           />
           <ChannelStatus
@@ -141,6 +142,7 @@ export default function RightPanel({
             setState={setState2}
             setOtherState={setState1}
             channelBalance={channelBalance}
+            offChain={offChain}
             setOffChain={setOffChain}
           />
         </div>
