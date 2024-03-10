@@ -1,7 +1,7 @@
 import strucStyle from "./../../styles.module.css";
 import style from "./userPanel.module.css";
 import { getSigner } from "../../../../ethereum.js";
-import { ethers } from "ethers";
+import { ethers, version } from "ethers";
 const { useState } = require("react");
 import { animate } from "framer-motion";
 
@@ -18,7 +18,7 @@ export default function ActionField({
   const filterdUsers = users.filter((u) => u.id !== user.id);
 
   const [fundAmount, setFundAmount] = useState("0");
-  const [closeAmount, setCloseAmount] = useState("0");
+  const [updateAmount, setUpdateAmount] = useState("0");
   const [error, setError] = useState("");
 
   const openChan = async () => {
@@ -63,6 +63,29 @@ export default function ActionField({
     }
   };
 
+  const updateOffChain = async () => {
+    try {
+      if (parseFloat(updateAmount) >= channelBalance) {
+        setError(`Wrong Input! Only numbers less ${channelBalance}!`);
+        throw new Error(`Wrong Input! Only numbers less ${channelBalance}!`);
+      }
+      if (parseFloat(updateAmount) <= 0) {
+        setError("Wrong Input! Only numbers greater 0!");
+        throw new Error("Wrong Input! Only numbers greater 0!");
+      }
+      setOffChain(current => {
+        version_num: current.version_num + 1,
+       
+
+       
+      })
+
+
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const withdrawChan = async () => {
     try {
       contract[user.id + 1].withdraw(1);
@@ -72,16 +95,7 @@ export default function ActionField({
   };
 
   const closeChan = async () => {
-    try {
-      if (parseFloat(closeAmount) >= channelBalance) {
-        setError(`Wrong Input! Only numbers less ${channelBalance}!`);
-        throw new Error(`Wrong Input! Only numbers less ${channelBalance}!`);
-      }
-      if (parseFloat(closeAmount) <= 0) {
-        setError("Wrong Input! Only numbers greater 0!");
-        throw new Error("Wrong Input! Only numbers greater 0!");
-      }
-
+    try {     
       const Channel_State = {
         channel_id: 1,
         balance_A:
@@ -166,10 +180,10 @@ export default function ActionField({
           placeholder="Amount"
           className={strucStyle.input}
           type="number"
-          onChange={(e) => setCloseAmount(e.target.value)}
+          onChange={(e) => setUpdateAmount(e.target.value)}
         />
-        <button className={strucStyle.button} onClick={() => closeChan()}>
-          Close
+        <button className={strucStyle.button} onClick={() => updateOffChain()}>
+          Update
         </button>
       </>
     );
