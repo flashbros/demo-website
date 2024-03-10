@@ -32,7 +32,13 @@ export default function ButtonLayout({
       case 6: // finalized, nur close geht
         setInactiveButtons([true, true, true, true, false, true]);
         break;
-      case 7: // closed, nur withdraw geht //state 8: man hat auf withdraw gedrückt
+      case 7: // close Zwischenstate (steht in der Mitte)
+        setInactiveButtons([true, true, true, true, false, true]);
+        break;
+      case 8: // closed, nur withdraw geht
+        setInactiveButtons([true, true, true, true, true, false]);
+        break;
+      case 9: // withdraw Zwischenstate (steht in der Mitte)
         setInactiveButtons([true, true, true, true, true, false]);
         break;
       default: // nichts geht
@@ -78,8 +84,8 @@ export default function ButtonLayout({
         className={`${style.button} ${inactive[4] ? style.inactive : ""}`}
         onClick={() => {
           if (!inactive[4]) {
-            setState(8);
-            setOtherState(7);
+            setState(7);
+            setOtherState(8);
           }
         }}
       >
@@ -89,7 +95,7 @@ export default function ButtonLayout({
         className={`${style.button} ${inactive[5] ? style.inactive : ""}`}
         onClick={() => {
           if (!inactive[5]) {
-            setState(8);
+            setState(9);
           }
         }}
       >
