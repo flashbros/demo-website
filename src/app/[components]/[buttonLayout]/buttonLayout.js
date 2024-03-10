@@ -33,7 +33,7 @@ export default function ButtonLayout({
         setInactiveButtons([true, true, true, true, false, true]);
         break;
       case 7: // close Zwischenstate (steht in der Mitte)
-        setInactiveButtons([true, true, true, true, false, true]);
+        setInactiveButtons([true, true, true, true, true, true]);
         break;
       case 8: // closed, nur withdraw geht
         setInactiveButtons([true, true, true, true, true, false]);
