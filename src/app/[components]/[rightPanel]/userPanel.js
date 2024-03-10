@@ -69,6 +69,7 @@ export default function UserPanel({
         setState={setState}
         otherState={otherState}
         setOtherState={setOtherState}
+        setOffChain={setOffChain}
       />
     </div>
   );

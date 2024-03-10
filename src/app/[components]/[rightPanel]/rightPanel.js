@@ -24,6 +24,7 @@ export default function RightPanel({
     version_num: 0,
     balance_A: 0,
     balance_B: 0,
+    finalized: false,
   });
 
   let users = [

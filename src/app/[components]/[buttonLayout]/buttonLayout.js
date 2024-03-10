@@ -7,8 +7,16 @@ export default function ButtonLayout({
   setState,
   otherState,
   setOtherState,
+  setOffChain,
 }) {
-  const [inactive, setInactiveButtons] = useState([true, true, true, true, true, true]);
+  const [inactive, setInactiveButtons] = useState([
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+  ]);
 
   useEffect(() => {
     switch (state) {
@@ -55,23 +63,24 @@ export default function ButtonLayout({
       <div
         className={`${style.button} ${inactive[3] ? style.inactive : ""}`}
         onClick={() => {
-            if(!inactive[3]) {
-              setState(6);
-              setOtherState(6);
-            }
-          }}
+          if (!inactive[3]) {
+            setState(6);
+            setOtherState(6);
+            setOffChain((prev) => {
+              return { ...prev, finalized: true };
+            });
+          }
+        }}
       >
         Finalize
       </div>
       <div
         className={`${style.button} ${inactive[4] ? style.inactive : ""}`}
         onClick={() => {
-          
           if (!inactive[4]) {
             setState(8);
             setOtherState(7);
           }
-          
         }}
       >
         Close

@@ -74,21 +74,19 @@ export default function ActionField({
         throw new Error("Wrong Input! Only numbers greater 0!");
       }
       setOffChain((current) => ({
-        version_num: (current.version_num + 1),
+        version_num: current.version_num + 1,
         balance_A:
           user.id == 0
-            ? ethers.utils.parseEther(updateAmount)
-            : ethers.utils.parseEther(
-                (channelBalance - parseFloat(updateAmount)).toFixed(8)
-              ),
+            ? updateAmount
+            : channelBalance - parseFloat(updateAmount),
         balance_B:
           user.id == 1
-            ? ethers.utils.parseEther(updateAmount)
-            : ethers.utils.parseEther(
-                (channelBalance - parseFloat(updateAmount)).toFixed(8)
-              ),
+            ? updateAmount
+            : channelBalance - parseFloat(updateAmount),
+        finalized: false,
       }));
     } catch (error) {
+      onError();
       console.log(error);
     }
   };
@@ -200,17 +198,19 @@ export default function ActionField({
     case 6:
       return <>Press a function!</>;
     case 7:
-      return <>Press a function!</>;
+      <>
+        <button className={strucStyle.button} onClick={() => closeChan()}>
+          Close
+        </button>
+      </>;
     case 8:
-      return (
-        <>
-          <button className={strucStyle.button} onClick={() => withdrawChan()}>
-            Withdraw
-          </button>
-        </>
-      );
+      return <>Press a function!</>;
     case 9:
-
+      <>
+        <button className={strucStyle.button} onClick={() => withdrawChan()}>
+          Withdraw
+        </button>
+      </>;
     case 10:
       return <>Transaction done!</>;
     default:
