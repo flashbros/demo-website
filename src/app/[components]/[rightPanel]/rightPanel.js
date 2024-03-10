@@ -16,10 +16,15 @@ export default function RightPanel({
 }) {
   let user1 = { name: "Alice", id: 0 };
   let user2 = { name: "Bob", id: 1 };
-  let channel = { id: "1" };
 
   const [d1, setD1] = useState(false);
   const [channelBalance, setChannelBalance] = useState(0);
+  // Version Number, Balance A, Balance B
+  const [offChain, setOffChain] = useState({
+    version_num: 0,
+    balance_A: 0,
+    balance_B: 0,
+  });
 
   let users = [
     {
@@ -56,7 +61,9 @@ export default function RightPanel({
           animate(conDots, { opacity: 0 }, { duration: 0.5 });
         }
         if (state1 == 8 && state2 == 8) {
-          let chSta = document.getElementsByClassName(style.channelContainer)[0];
+          let chSta = document.getElementsByClassName(
+            style.channelContainer
+          )[0];
           animate(chSta, { opacity: 0 }, { duration: 0.5 });
         }
       }
@@ -76,6 +83,26 @@ export default function RightPanel({
     }
     dodo();
   }, [contract, balance]);
+
+  useEffect(() => {
+    async function dodo() {
+      if (contract) {
+        let version_num = (await contract[0].channels(1)).state.version_num;
+        let balance_A = ethers.utils.formatEther(
+          (await contract[0].channels(1))[0][1].toString()
+        );
+        let balance_B = ethers.utils.formatEther(
+          (await contract[0].channels(1))[0][2].toString()
+        );
+        setOffChain({
+          version_num: version_num.toNumber(),
+          balance_A: balance_A,
+          balance_B: balance_B,
+        });
+      }
+    }
+    dodo();
+  }, [contract]);
 
   useEffect(() => {
     console.log("Channel Balance: " + channelBalance);
@@ -98,8 +125,13 @@ export default function RightPanel({
             setState={setState1}
             setOtherState={setState2}
             channelBalance={channelBalance}
+            setOffChain={setOffChain}
           />
-          <ChannelStatus channel={channel} channelBalance={channelBalance} />
+          <ChannelStatus
+            contract={contract}
+            channelBalance={channelBalance}
+            offChain={offChain}
+          />
           <UserPanel
             user={user2}
             users={users}
@@ -109,6 +141,7 @@ export default function RightPanel({
             setState={setState2}
             setOtherState={setState1}
             channelBalance={channelBalance}
+            setOffChain={setOffChain}
           />
         </div>
       </div>
