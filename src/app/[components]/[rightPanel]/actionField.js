@@ -118,7 +118,7 @@ export default function ActionField({
   switch (state) {
     case 0:
       return <>Press a function!</>;
-    case 1:
+    case 1: // open wurde gepresst
       return (
         <>
           <select className={style.select}>
@@ -135,7 +135,7 @@ export default function ActionField({
       );
     case 2:
       return <>Press a function!</>;
-    case 3:
+    case 3: //fund wurde gepresst
       return (
         <>
           <div id={"errorMsg" + user.id} className={style.error}>
@@ -154,26 +154,28 @@ export default function ActionField({
       );
     case 4:
       return <>Press a function!</>;
-    case 5:
-      return (
-        <>
-          <div id={"errorMsg" + user.id} className={style.error}>
-            {error}
-          </div>
-          <input
-            placeholder="Amount"
-            className={strucStyle.input}
-            type="number"
-            onChange={(e) => setCloseAmount(e.target.value)}
-          />
-          <button className={strucStyle.button} onClick={() => closeChan()}>
-            Close
-          </button>
-        </>
-      );
+    case 5: 
+    return (
+      <>
+        <div id={"errorMsg" + user.id} className={style.error}>
+          {error}
+        </div>
+        <input
+          placeholder="Amount"
+          className={strucStyle.input}
+          type="number"
+          onChange={(e) => setCloseAmount(e.target.value)}
+        />
+        <button className={strucStyle.button} onClick={() => closeChan()}>
+          Close
+        </button>
+      </>
+    );
     case 6:
       return <>Press a function!</>;
     case 7:
+      return <>Press a function!</>;
+    case 8:
       return (
         <>
           <button className={strucStyle.button} onClick={() => withdrawChan()}>
@@ -181,7 +183,9 @@ export default function ActionField({
           </button>
         </>
       );
-    case 8:
+    case 9:
+      
+    case 10:
       return <>Transaction done!</>;
     default:
       return <>error</>;
