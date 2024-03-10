@@ -1,12 +1,13 @@
 {
-  "name": "first-web3-test",
+  "name": "demo-website",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "docker": "docker build -t demo-website ."
   },
   "dependencies": {
     "framer-motion": "^11.0.5",
