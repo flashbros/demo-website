@@ -15,7 +15,7 @@ export default function ChannelStatus({
           <div>
             Ver.-Nr.: {state1 >= 6 && state2 >= 6 ? offChain.version_num : 0}
           </div>
-          <div>Balance: {channelBalance}</div>
+          <div>Balance: {channelBalance} ETH</div>
           <div>Finalized: {offChain.finalized ? "true" : "false"}</div>
         </div>
         <div className={style.dividerY}></div>

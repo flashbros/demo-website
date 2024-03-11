@@ -29,22 +29,24 @@ export default function UserPanel({
           )
           .slice(0, 7);
         setWalletBalance(wb);
-        let ub = ethers.utils.formatEther(
-          (await contract[0].channels(1))[0][user.id + 1].toString()
-        );
-        setUserBalance(ub);
+        if (offChain.finalized) {
+          setUserBalance(user.id === 0 ? offChain.balance_A : offChain.balance_B)
+        } else {
+          let ub = ethers.utils.formatEther(
+            (await contract[0].channels(1))[0][user.id + 1].toString()
+          );
+          setUserBalance(ub);
+        }
       }
     }
     dodo();
-  }, [contract, ownState, channelBalance]);
+  }, [contract, ownState, channelBalance, offChain]);
 
   return (
     <div className={style.userContainer}>
       <div className={style.topWrapper}>
         <div className={style.left}>
-          <div>
-            {user.name}
-          </div>
+          <div>{user.name}</div>
           <div>Wallet: {walletBalance} ETH</div>
         </div>
         <div className={style.right}>
