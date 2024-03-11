@@ -79,11 +79,19 @@ export default function ActionField({
         balance_A:
           user.id == 0
             ? updateAmount
-            : channelBalance - parseFloat(updateAmount),
+            : (channelBalance - parseFloat(updateAmount)).toFixed(
+                updateAmount.includes(".")
+                  ? updateAmount.split(".")[1].length
+                  : 0
+              ),
         balance_B:
           user.id == 1
             ? updateAmount
-            : channelBalance - parseFloat(updateAmount),
+            : (channelBalance - parseFloat(updateAmount)).toFixed(
+                updateAmount.includes(".")
+                  ? updateAmount.split(".")[1].length
+                  : 0
+              ),
         finalized: false,
       }));
       setState(4);
