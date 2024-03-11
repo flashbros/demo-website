@@ -43,7 +43,7 @@ export default function UserPanel({
       <div className={style.topWrapper}>
         <div className={style.left}>
           <div>
-            {user.name} {ownState}
+            {user.name}
           </div>
           <div>Wallet: {walletBalance} ETH</div>
         </div>
