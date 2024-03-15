@@ -73,7 +73,7 @@ export default function ButtonLayout({
             setState(6);
             setOtherState(6);
             setOffChain((prev) => {
-              return { ...prev, finalized: true };
+              return { ...prev, version_num: prev.version_num + 1 , finalized: true };
             });
           }
         }}
